@@ -1,7 +1,12 @@
 import { ListContact } from '../ListContact/ListContact';
 import { ListStyle, ItemStyle, TotalParagraf } from './List.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContact, getStatusFilter } from 'redux/selectors';
+import {
+  getContact,
+  getStatusFilter,
+  getError,
+  getIsLoading,
+} from 'redux/selectors';
 import { useEffect } from 'react';
 import { fetchContacts } from 'redux/contactOperations';
 
@@ -14,11 +19,13 @@ export const List = () => {
 
   const contacts = useSelector(getContact);
   const filter = useSelector(getStatusFilter);
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
   console.log(contacts);
 
-  if (!contacts) {
-    return;
-  }
+  // if (!contacts) {
+  //   return;
+  // }
 
   const normalizeFilter = filter.toLowerCase();
 
@@ -30,8 +37,11 @@ export const List = () => {
 
   return (
     <>
-      <TotalParagraf>Total contacts:{totalContact} </TotalParagraf>
-      {totalContact > 0 && (
+      {isLoading && !error && <b>Request in progress...</b>}
+      {!isLoading && (
+        <TotalParagraf>Total contacts:{totalContact} </TotalParagraf>
+      )}
+      {totalContact > 0 ? (
         <ListStyle>
           {visibleContact.map(({ name, number, id }) => (
             <ItemStyle key={id}>
@@ -39,6 +49,8 @@ export const List = () => {
             </ItemStyle>
           ))}
         </ListStyle>
+      ) : (
+        <p>Your phonebook is empty. Please add contact.</p>
       )}
     </>
   );
