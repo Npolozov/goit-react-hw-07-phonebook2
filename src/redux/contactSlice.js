@@ -34,13 +34,14 @@ import { fetchContacts } from './contactOperations';
 //   },
 // });
 
-const contactsSlice = createSlice({
+export const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
     items: [],
     isLoading: false,
     error: null,
   },
+
   extraReducers: {
     [fetchContacts.fulfilled]: (state, action) => {
       return {

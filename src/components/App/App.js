@@ -13,11 +13,11 @@ import { GlobalStyle } from '../GlobalStyles.styled';
 import { OpenModal } from 'components/Modal/Modal';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useSelector } from 'react-redux';
-import { getContact } from 'redux/selectors';
+// import { useSelector } from 'react-redux';
+// import { getContact } from 'redux/selectors';
 
 export const App = () => {
-  const contacts = useSelector(getContact);
+  // const contacts = useSelector(getContact);
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
@@ -40,12 +40,8 @@ export const App = () => {
         </Wrapper>
         <WrapperContact>
           <Title>Contacts</Title>
-          {contacts.length >= 1 && <Filter />}
-          {contacts.length > 0 ? (
-            <List />
-          ) : (
-            <p>Your phonebook is empty. Please add contact.</p>
-          )}
+          <Filter />
+          <List />
         </WrapperContact>
         <ToastContainer autoClose={2000} position="top-right" />
       </Container>

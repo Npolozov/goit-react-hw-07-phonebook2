@@ -6,18 +6,25 @@ import { useEffect } from 'react';
 import { fetchContacts } from 'redux/contactOperations';
 
 export const List = () => {
-  const contacts = useSelector(getContact);
-  const filter = useSelector(getStatusFilter);
   const dispatch = useDispatch();
 
-  useEffect(() => dispatch(fetchContacts()), [dispatch]);
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  const contacts = useSelector(getContact);
+  const filter = useSelector(getStatusFilter);
+  console.log(contacts);
+
+  if (!contacts) {
+    return;
+  }
 
   const normalizeFilter = filter.toLowerCase();
 
   const visibleContact = contacts.filter(contact =>
     contact.name.toLowerCase().includes(normalizeFilter)
   );
-  console.log(visibleContact);
 
   const totalContact = contacts.length;
 
