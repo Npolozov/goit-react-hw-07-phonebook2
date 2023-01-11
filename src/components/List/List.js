@@ -1,11 +1,16 @@
 import { ListContact } from '../ListContact/ListContact';
 import { ListStyle, ItemStyle, TotalParagraf } from './List.styled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getContact, getStatusFilter } from 'redux/selectors';
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/contactOperations';
 
 export const List = () => {
   const contacts = useSelector(getContact);
   const filter = useSelector(getStatusFilter);
+  const dispatch = useDispatch();
+
+  useEffect(() => dispatch(fetchContacts()), [dispatch]);
 
   const normalizeFilter = filter.toLowerCase();
 
