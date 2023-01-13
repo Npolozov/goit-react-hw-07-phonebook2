@@ -36,7 +36,7 @@ export const ContactForm = ({ toggleModal }) => {
     ) {
       return toast.error(`${number} is already in contacts.`);
     } else {
-      dispatch(addContact({ name, number }));
+      dispatch(addContact(values));
     }
 
     toggleModal();
