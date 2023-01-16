@@ -9,54 +9,107 @@ export const contactsSlice = createSlice({
     error: null,
   },
 
+  // extraReducers: {
+  //   [fetchContacts.fulfilled]: (state, action) => {
+  //     return {
+  //       ...state,
+  //       isLoading: false,
+  //       items: action.payload,
+  //     };
+  //   },
+
+  //   [fetchContacts.pending]: state => {
+  //     return {
+  //       ...state,
+  //       isLoading: true,
+  //       error: null,
+  //     };
+  //   },
+
+  //   [fetchContacts.rejected]: (state, action) => {
+  //     return {
+  //       ...state,
+  //       isLoading: false,
+  //       error: action.payload,
+  //     };
+  //   },
+  //   [addContact.fulfilled]: (state, action) => {
+  //     return {
+  //       ...state,
+  //       isLoading: false,
+  //       items: [...state.items, action.payload],
+  //     };
+  //   },
+
+  //   [addContact.pending]: state => {
+  //     return {
+  //       ...state,
+  //       isLoading: true,
+  //       error: null,
+  //     };
+  //   },
+
+  //   [addContact.rejected]: (state, action) => {
+  //     return {
+  //       ...state,
+  //       isLoading: false,
+  //       error: action.payload,
+  //     };
+  //   },
+  //   [deleteContact.fulfilled]: (state, action) => {
+  //     state.isLoading = false;
+  //     state.error = null;
+  //     const index = state.items.findIndex(
+  //       task => task.id === action.payload.id
+  //     );
+  //     state.items.splice(index, 1);
+  //   },
+
+  //   [deleteContact.pending]: state => {
+  //     return {
+  //       ...state,
+  //       isLoading: true,
+  //       error: null,
+  //     };
+  //   },
+
+  //   [deleteContact.rejected]: (state, action) => {
+  //     return {
+  //       ...state,
+  //       isLoading: false,
+  //       error: action.payload,
+  //     };
+  //   },
+  // },
   extraReducers: {
-    [fetchContacts.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        isLoading: false,
-        items: action.payload,
-      };
+    [fetchContacts.pending](state) {
+      state.isLoading = true;
     },
-
-    [fetchContacts.pending]: state => {
-      return {
-        ...state,
-        isLoading: true,
-        error: null,
-      };
+    [fetchContacts.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.items = action.payload;
     },
-
-    [fetchContacts.rejected]: (state, action) => {
-      return {
-        ...state,
-        isLoading: false,
-        error: action.payload,
-      };
+    [fetchContacts.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
     },
-    [addContact.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        isLoading: false,
-        items: [...state.items, action.payload],
-      };
+    [addContact.pending](state) {
+      state.isLoading = true;
     },
-
-    [addContact.pending]: state => {
-      return {
-        ...state,
-        isLoading: true,
-        error: null,
-      };
+    [addContact.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.items.push(action.payload);
     },
-
-    [addContact.rejected]: (state, action) => {
-      return {
-        ...state,
-        isLoading: false,
-        error: action.payload,
-      };
+    [addContact.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
     },
-    [deleteContact.fulfilled]: (state, action) => {
+    [deleteContact.pending](state) {
+      state.isLoading = true;
+    },
+    [deleteContact.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
       const index = state.items.findIndex(
@@ -64,21 +117,9 @@ export const contactsSlice = createSlice({
       );
       state.items.splice(index, 1);
     },
-
-    [deleteContact.pending]: state => {
-      return {
-        ...state,
-        isLoading: true,
-        error: null,
-      };
-    },
-
-    [deleteContact.rejected]: (state, action) => {
-      return {
-        ...state,
-        isLoading: false,
-        error: action.payload,
-      };
+    [deleteContact.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
     },
   },
 });
